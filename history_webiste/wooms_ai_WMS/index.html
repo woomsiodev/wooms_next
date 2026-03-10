@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wooms AI - More than a WMS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-dot"></div>
+
+    <!-- Timeline Progress Bar -->
+    <div class="timeline-progress-bar">
+        <div class="timeline-progress-fill"></div>
+    </div>
+
+    <!-- Hero Section with Video -->
+    <section class="hero">
+        <div class="video-container">
+            <video autoplay muted playsinline class="hero-video">
+                <source src="media/wooms_AI_more_than_a_WMS.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="hero-content">
+        </div>
+        <div class="scroll-indicator">
+            <span class="scroll-text">Scrollen</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="timeline-header">
+                <h2 class="section-title timeline-title-animated">
+                    <span class="title-word" data-text="Die">Die</span>
+                    <span class="title-word highlight-word" data-text="Evolution">Evolution</span>
+                    <span class="title-word" data-text="des">des</span>
+                    <span class="title-word" data-text="Warehouse">Warehouse</span>
+                    <span class="title-word" data-text="Management">Management</span>
+                </h2>
+                <p class="timeline-tagline">
+                    <span class="tagline-text"></span>
+                    <span class="tagline-cursor">|</span>
+                </p>
+                <div class="timeline-connector"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-line"></div>
+
+                <!-- 1917 - Gabelstapler -->
+                <div class="timeline-item timeline-item-interactive" data-year="1917">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1917</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1917_Gabelstapler.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Der erste Gabelstapler</h4>
+                            <p class="timeline-description">Maschinen heben, bewegen und stapeln. Lager werden vertikal – und skalierbar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1950er - Papier -->
+                <div class="timeline-item timeline-item-interactive" data-year="1950">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1950er</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1950_Papier_Lagerverwaltung.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Papierbasierte Lagerverwaltung</h4>
+                            <p class="timeline-description">Picklisten, Zuruf, Erfahrung. Das Lager funktioniert – solange es klein bleibt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1956 - Container -->
+                <div class="timeline-item timeline-item-interactive" data-year="1956">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1956</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1956_Erste_Containerbewegung_.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Containerisierung</h4>
+                            <p class="timeline-description">Standardisierung senkt Umschlagzeiten und Kosten. Supply Chains werden weltweit planbar.</p>
+                        </div>
+                    </div>
+                </div>
+
+<!-- Neue kompakte Timeline mit allen Punkten -->
+
+                <!-- 1974 - Barcode -->
+                <div class="timeline-item timeline-item-interactive" data-year="1974">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1974</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1974_Barcode_Scan_Kasse.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Barcode (UPC)</h4>
+                            <p class="timeline-description">Ware bekommt eine maschinenlesbare Identität. Scanning wird Basis für Bestandsführung.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1979 - EDI -->
+                <div class="timeline-item timeline-item-interactive" data-year="1979">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1979</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1979_EDI.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">EDI (Electronic Data Interchange)</h4>
+                            <p class="timeline-description">Bestellungen, Lieferscheine und Statusmeldungen laufen digital zwischen Unternehmen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1980er - WMS -->
+                <div class="timeline-item timeline-item-interactive" data-year="1980">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1980er</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1980_Lagersoftware.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Erste IT-gestützte Lagerverwaltung / WMS</h4>
+                            <p class="timeline-description">Lagerlogik wird Software: Plätze, Bewegungen, Bestände. Meist starr, regelbasiert, oft ohne Echtzeit.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1987 - Standards -->
+                <div class="timeline-item timeline-item-interactive" data-year="1987">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1987</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1987_EDIFACT_Standard.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Internationale Standards (UN/EDIFACT)</h4>
+                            <p class="timeline-description">Lieferketten sprechen dieselbe Sprache. Schnittstellen werden zum Rückgrat der Skalierung.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1997 - Amazon FC -->
+                <div class="timeline-item timeline-item-interactive" data-year="1997">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">1997</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/1997_Amazon_WMS_Anfang.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Erstes Amazon Fulfillment Center</h4>
+                            <p class="timeline-description">E-Commerce-Fulfillment wird zur Industrie: softwaregetrieben statt improvisiert.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2000er - WMS Standard -->
+                <div class="timeline-item timeline-item-interactive" data-year="2000">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2000er</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2000_WMS_Standard.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Klassische WMS-Systeme werden Standard</h4>
+                            <p class="timeline-description">Regelbasierte Workflows, hoher Customizing-Aufwand, kaum lernfähig. Systeme verwalten – sie verstehen nicht.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2005 - RFID -->
+                <div class="timeline-item timeline-item-interactive" data-year="2005">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2005</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2005_RFID.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">RFID & Tracking</h4>
+                            <p class="timeline-description">Sichtbarkeit ohne Line-of-Sight. Mehr Einheiten gleichzeitig erfassen. Tracking wird dichter.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2005 - Micro-Fulfillment -->
+                <div class="timeline-item timeline-item-interactive" data-year="2005b">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2005</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2005_Cube_Storage_Fulfillment.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Micro-Fulfillment & verdichtete Lager (Cube-Storage)</h4>
+                            <p class="timeline-description">Mehr Lagerdichte, kürzere Wege, höherer Durchsatz. Automatisierung wird kompakt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2012 - Robotik -->
+                <div class="timeline-item timeline-item-interactive" data-year="2012">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2012</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2012Lagerroboter_Ware-zum_Mann.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Mobile Lagerrobotik skaliert (Ware-zum-Mann)</h4>
+                            <p class="timeline-description">Roboterflotten reduzieren Laufwege und erhöhen Output. Automatisierung wird wirtschaftlich skalierbar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2018 - Lieferroboter -->
+                <div class="timeline-item timeline-item-interactive" data-year="2018">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2018</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2018_Starship_Lieferroboter.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Lieferroboter (Letzte Meile)</h4>
+                            <p class="timeline-description">Zoniert, real, im Einsatz: autonome Zustellung für kurze, wiederkehrende Routen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2019 - Drohnenzustellung -->
+                <div class="timeline-item timeline-item-interactive" data-year="2019" data-start-time="3">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2019</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2019_DHL_Drohnenzustellung.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Drohnenzustellung</h4>
+                            <p class="timeline-description">Luft wird zusätzlicher Transportweg für kleine, dringende Sendungen – unter klaren Rahmenbedingungen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2020 - Drohneninventur -->
+                <div class="timeline-item timeline-item-interactive" data-year="2020">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2020</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2020_ Drohneninventur.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Drohneninventur im Lager</h4>
+                            <p class="timeline-description">Bestände werden kontinuierlich geprüft. Inventur wird Prozess – nicht Projekt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Heute - wooms AI -->
+                <div class="timeline-item" data-year="2024">
+                    <div class="timeline-marker">
+                        <div class="marker-circle highlight">Heute</div>
+                    </div>
+                    <div class="timeline-content timeline-bottom highlight">
+                        <div class="timeline-icon">
+                            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" fill="url(#ai-gradient)"/><path d="M 35 50 Q 50 35 65 50 Q 50 65 35 50" fill="#fff" opacity="0.3"/><circle cx="42" cy="45" r="3" fill="#fff"/><circle cx="58" cy="45" r="3" fill="#fff"/><path d="M 40 58 Q 50 62 60 58" stroke="#fff" stroke-width="2" fill="none"/><defs><linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0066FF;stop-opacity:1"/><stop offset="100%" style="stop-color:#00D9FF;stop-opacity:1"/></linearGradient></defs></svg>
+                        </div>
+                        <h4 class="timeline-title">wooms AI</h4>
+                        <p class="timeline-description">KI-first WMS: lernende Flows statt starrer Workflows. Orchestrierung, Automatisierung und Echtzeit-Entscheidungen.</p>
+                    </div>
+                </div>
+
+                <!-- 2030+ - Zukunft -->
+                <div class="timeline-item timeline-item-interactive" data-year="2030">
+                    <div class="timeline-marker">
+                        <div class="marker-circle">2030+</div>
+                    </div>
+                    <div class="timeline-content timeline-top">
+                        <div class="timeline-media">
+                            <video class="timeline-video" loop muted playsinline>
+                                <source src="media/warehouse_evolution/2030_Future_Warehouse.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay-play">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="timeline-text-content">
+                            <h4 class="timeline-title">Selbstoptimierende Lager</h4>
+                            <p class="timeline-description">Autonome Orchestrierung von Flotten, Wegen, Prioritäten und Kapazitäten – das Lager denkt mit.</p>
+                        </div>
+                    </div>
+                </div>
+    <!-- Analytics AI Studio Section -->
+    <section class="feature-section analytics-section" id="analytics">
+        <div class="feature-container">
+            <div class="feature-visual">
+                <div class="visual-card analytics-card">
+                    <div class="card-glow"></div>
+                    <div class="data-visualization">
+                        <div class="chart-bars">
+                            <div class="bar bar-1"></div>
+                            <div class="bar bar-2"></div>
+                            <div class="bar bar-3"></div>
+                            <div class="bar bar-4"></div>
+                            <div class="bar bar-5"></div>
+                        </div>
+                        <div class="analytics-overlay">
+                            <div class="data-point"></div>
+                            <div class="data-point"></div>
+                            <div class="data-point"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-content">
+                <span class="feature-label">01 — Analytics</span>
+                <h2 class="feature-title">Wooms Analytics AI Studio</h2>
+                <p class="feature-description">
+                    Verwandeln Sie Rohdaten in strategische Entscheidungen. Unser AI Studio
+                    analysiert Millionen von Datenpunkten in Echtzeit und liefert präzise
+                    Vorhersagen für Nachfrage, Lagerbestände und Optimierungspotenziale.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="list-icon">→</span>
+                        Predictive Analytics für Bedarfsplanung
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Echtzeit-Dashboards mit KI-gestützten Insights
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Automatische Anomalie-Erkennung
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Custom Report Generator mit Natural Language Processing
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Address Guardian Section -->
+    <section class="feature-section guardian-section" id="guardian">
+        <div class="feature-container feature-reverse">
+            <div class="feature-content">
+                <span class="feature-label">02 — Validation</span>
+                <h2 class="feature-title">AI Address Guardian</h2>
+                <p class="feature-description">
+                    Schluss mit Zustellproblemen durch fehlerhafte Adressen. Der AI Address
+                    Guardian validiert, korrigiert und optimiert Lieferadressen automatisch
+                    durch maschinelles Lernen und globale Adressdatenbanken.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="list-icon">→</span>
+                        Intelligente Adressvalidierung in Echtzeit
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Automatische Korrektur von Tippfehlern
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Geocoding und Routenoptimierung
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Internationale Adressformate mit 99,9% Genauigkeit
+                    </li>
+                </ul>
+            </div>
+            <div class="feature-visual">
+                <div class="visual-card guardian-card">
+                    <div class="card-glow"></div>
+                    <div class="address-validation">
+                        <div class="address-input">
+                            <div class="input-line"></div>
+                            <div class="input-line short"></div>
+                            <div class="input-line medium"></div>
+                        </div>
+                        <div class="validation-check">
+                            <div class="check-icon">✓</div>
+                        </div>
+                        <div class="map-overlay">
+                            <div class="map-pin"></div>
+                            <div class="map-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Routing Section -->
+    <section class="feature-section routing-section" id="routing">
+        <div class="feature-container">
+            <div class="feature-visual">
+                <div class="visual-card routing-card">
+                    <div class="card-glow"></div>
+                    <div class="routing-visualization">
+                        <div class="route-line route-1"></div>
+                        <div class="route-line route-2"></div>
+                        <div class="route-line route-3"></div>
+                        <div class="route-nodes">
+                            <div class="node node-1"></div>
+                            <div class="node node-2"></div>
+                            <div class="node node-3"></div>
+                            <div class="node node-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-content">
+                <span class="feature-label">03 — Optimization</span>
+                <h2 class="feature-title">Smart Routing AI</h2>
+                <p class="feature-description">
+                    Optimieren Sie jede Route mit künstlicher Intelligenz. Unser System
+                    berücksichtigt Verkehr, Wetter, Lieferprioritäten und historische
+                    Daten, um die effizientesten Routen zu berechnen.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="list-icon">→</span>
+                        Dynamic Route Optimization in Echtzeit
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Multi-Depot und Multi-Vehicle Routing
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        CO2-optimierte Routenplanung
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Kostenreduktion bis zu 30%
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inventory Intelligence Section -->
+    <section class="feature-section inventory-section" id="inventory">
+        <div class="feature-container feature-reverse">
+            <div class="feature-content">
+                <span class="feature-label">04 — Intelligence</span>
+                <h2 class="feature-title">Inventory Intelligence AI</h2>
+                <p class="feature-description">
+                    Nie wieder Überbestände oder Out-of-Stock-Situationen. Unsere KI
+                    lernt aus Ihren Verkaufsmustern, Saisonalitäten und externen Faktoren,
+                    um perfekte Bestandsmengen vorherzusagen.
+                </p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="list-icon">→</span>
+                        Demand Forecasting mit Deep Learning
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Automatische Nachbestellungsempfehlungen
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        ABC-XYZ-Analyse in Echtzeit
+                    </li>
+                    <li>
+                        <span class="list-icon">→</span>
+                        Seasonal Pattern Recognition
+                    </li>
+                </ul>
+            </div>
+            <div class="feature-visual">
+                <div class="visual-card inventory-card">
+                    <div class="card-glow"></div>
+                    <div class="inventory-visualization">
+                        <div class="stock-levels">
+                            <div class="level-bar level-1"></div>
+                            <div class="level-bar level-2"></div>
+                            <div class="level-bar level-3"></div>
+                        </div>
+                        <div class="prediction-curve"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Vision Section -->
+    <section class="vision-section">
+        <div class="container">
+            <div class="vision-content">
+                <span class="feature-label">Coming Soon</span>
+                <h2 class="section-title">Die Zukunft ist intelligent</h2>
+                <div class="future-grid">
+                    <div class="future-card">
+                        <div class="future-icon">🤖</div>
+                        <h3>Autonomous Warehouse</h3>
+                        <p>Vollautomatisierte Lagerverwaltung durch AI-gesteuerte Robotik</p>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">💬</div>
+                        <h3>Natural Language Interface</h3>
+                        <p>Steuern Sie Ihr Lager durch einfache Sprachbefehle</p>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">🔮</div>
+                        <h3>Predictive Maintenance</h3>
+                        <p>Vorhersage von Wartungsbedarf bevor Probleme entstehen</p>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">🌐</div>
+                        <h3>Supply Chain AI Network</h3>
+                        <p>Intelligente Vernetzung Ihrer gesamten Lieferkette</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Bereit für die Zukunft?</h2>
+                <p class="cta-description">Lassen Sie uns gemeinsam Ihr Warehouse Management revolutionieren.</p>
+                <a href="#" class="cta-btn">Demo vereinbaren</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-text">WOOMS<span class="logo-ai">AI</span></span>
+                    <p>More than a WMS</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Produkt</h4>
+                        <a href="#analytics">Analytics AI Studio</a>
+                        <a href="#guardian">Address Guardian</a>
+                        <a href="#routing">Smart Routing</a>
+                        <a href="#inventory">Inventory Intelligence</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Unternehmen</h4>
+                        <a href="#">Über uns</a>
+                        <a href="#">Karriere</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Kontakt</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="#">Datenschutz</a>
+                        <a href="#">Impressum</a>
+                        <a href="#">AGB</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Wooms AI. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
