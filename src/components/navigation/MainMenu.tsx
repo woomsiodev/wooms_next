@@ -218,15 +218,15 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
                 </li>
                 <li
                   className="menu-item"
-                  onMouseEnter={() => setActiveMenuItem('karriere')}
+                  onMouseEnter={() => setActiveMenuItem('preise')}
                 >
                   <a
-                    href="/karriere"
+                    href="/preise"
                     className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 block ${
-                      pathname === '/karriere' ? 'font-bold' : 'font-normal'
-                    } ${activeMenuItem === 'karriere' ? 'translate-x-4' : ''}`}
+                      pathname === '/preise' ? 'font-bold' : 'font-normal'
+                    } ${activeMenuItem === 'preise' ? 'translate-x-4' : ''}`}
                   >
-                    Karriere
+                    Preise
                   </a>
                 </li>
               </ul>
