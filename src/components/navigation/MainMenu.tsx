@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { usePathname } from 'next/navigation';
+import Script from 'next/script';
 
 interface MainMenuProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface MainMenuProps {
 export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
   const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
 
   // Bestimme Hintergrundfarbe basierend auf der aktuellen Seite
   const getBackgroundColor = () => {
@@ -49,6 +51,7 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+
 
   if (!isOpen) return null;
 
@@ -90,26 +93,31 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
           <div className="flex flex-col justify-between lg:pl-[300px]">
             <nav>
               <ul className="space-y-4">
-                <li className="menu-item">
+                <li
+                  className="menu-item"
+                  onMouseEnter={() => setActiveMenuItem('home')}
+                >
                   <a
                     href="/"
-                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-colors block ${
+                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 block ${
                       pathname === '/' ? 'font-bold' : 'font-normal'
-                    }`}
+                    } ${activeMenuItem === 'home' ? 'translate-x-4' : ''}`}
                   >
                     Home
                   </a>
                 </li>
                 <li
                   className="menu-item"
-                  onMouseEnter={() => setHoveredItem('ueber-uns')}
-                  onMouseLeave={() => setHoveredItem(null)}
+                  onMouseEnter={() => {
+                    setHoveredItem('ueber-uns');
+                    setActiveMenuItem('ueber-uns');
+                  }}
                 >
                   <a
                     href="/ueber-uns"
-                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-colors flex items-center gap-3 ${
+                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 flex items-center gap-3 ${
                       pathname === '/ueber-uns' ? 'font-bold' : 'font-normal'
-                    }`}
+                    } ${activeMenuItem === 'ueber-uns' ? 'translate-x-4' : ''}`}
                   >
                     Über uns
                     <svg
@@ -117,62 +125,106 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
                       height="24"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke="currentColor"
                       strokeWidth="2"
-                      className={`transition-transform ${
+                      className={`transition-all ${
                         hoveredItem === 'ueber-uns' ? 'translate-x-1' : ''
-                      }`}
+                      } ${activeMenuItem === 'ueber-uns' ? 'stroke-[#D1B06B]' : 'stroke-current'}`}
                     >
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </a>
                 </li>
-                <li className="menu-item">
+                <li
+                  className="menu-item"
+                  onMouseEnter={() => setActiveMenuItem('shopify')}
+                >
                   <a
                     href="/shopify"
-                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-colors block ${
+                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 block ${
                       pathname === '/shopify' ? 'font-bold' : 'font-normal'
-                    }`}
+                    } ${activeMenuItem === 'shopify' ? 'translate-x-4' : ''}`}
                   >
                     Shopify
                   </a>
                 </li>
-                <li className="menu-item">
+                <li
+                  className="menu-item"
+                  onMouseEnter={() => setActiveMenuItem('verantwortung')}
+                >
                   <a
                     href="/verantwortung"
-                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-colors block ${
+                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 block ${
                       pathname === '/verantwortung' ? 'font-bold' : 'font-normal'
-                    }`}
+                    } ${activeMenuItem === 'verantwortung' ? 'translate-x-4' : ''}`}
                   >
                     Verantwortung
                   </a>
                 </li>
-                <li className="menu-item">
+                <li
+                  className="menu-item"
+                  onMouseEnter={() => {
+                    setHoveredItem('ai-funktionen');
+                    setActiveMenuItem('ai-funktionen');
+                  }}
+                >
                   <a
                     href="/ai-funktionen"
-                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-colors block ${
+                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 flex items-center gap-3 ${
                       pathname === '/ai-funktionen' ? 'font-bold' : 'font-normal'
-                    }`}
+                    } ${activeMenuItem === 'ai-funktionen' ? 'translate-x-4' : ''}`}
                   >
                     AI Funktionen
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      strokeWidth="2"
+                      className={`transition-all ${
+                        hoveredItem === 'ai-funktionen' ? 'translate-x-1' : ''
+                      } ${activeMenuItem === 'ai-funktionen' ? 'stroke-[#D1B06B]' : 'stroke-current'}`}
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
                   </a>
                 </li>
-                <li className="menu-item">
+                <li
+                  className="menu-item"
+                  onMouseEnter={() => {
+                    setHoveredItem('loesungen');
+                    setActiveMenuItem('loesungen');
+                  }}
+                >
                   <a
-                    href="/social-wall"
-                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-colors block ${
-                      pathname === '/social-wall' ? 'font-bold' : 'font-normal'
-                    }`}
+                    href="/loesungen"
+                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 flex items-center gap-3 ${
+                      pathname === '/loesungen' ? 'font-bold' : 'font-normal'
+                    } ${activeMenuItem === 'loesungen' ? 'translate-x-4' : ''}`}
                   >
-                    Social Wall
+                    Lösungen
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      strokeWidth="2"
+                      className={`transition-all ${
+                        hoveredItem === 'loesungen' ? 'translate-x-1' : ''
+                      } ${activeMenuItem === 'loesungen' ? 'stroke-[#D1B06B]' : 'stroke-current'}`}
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
                   </a>
                 </li>
-                <li className="menu-item">
+                <li
+                  className="menu-item"
+                  onMouseEnter={() => setActiveMenuItem('karriere')}
+                >
                   <a
                     href="/karriere"
-                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-colors block ${
+                    className={`text-[36px] leading-tight text-[#01182D] hover:text-[#D1B06B] transition-all duration-300 block ${
                       pathname === '/karriere' ? 'font-bold' : 'font-normal'
-                    }`}
+                    } ${activeMenuItem === 'karriere' ? 'translate-x-4' : ''}`}
                   >
                     Karriere
                   </a>
@@ -182,7 +234,14 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
 
             {/* Bottom Links */}
             <div className="mt-auto space-y-3 pb-6">
-              <a href="/kontakt" className="menu-item text-[18px] text-[#01182D]/60 hover:text-[#01182D] transition-colors block">
+              <a
+                href="/kontakt"
+                className="menu-item text-[18px] text-[#01182D]/60 hover:text-[#01182D] transition-colors block"
+                onMouseEnter={() => {
+                  setHoveredItem('kontakt');
+                  setActiveMenuItem('kontakt');
+                }}
+              >
                 Kontakt
               </a>
               <a href="/presse" className="menu-item text-[18px] text-[#01182D]/60 hover:text-[#01182D] transition-colors block">
@@ -194,7 +253,7 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
             </div>
           </div>
 
-          {/* Right Column - Submenu (nur beim Hover auf Über uns) */}
+          {/* Right Column - Submenu */}
           <div className="lg:pl-12 lg:border-l border-[#01182D]/10 flex flex-col justify-between">
             {hoveredItem === 'ueber-uns' && (
               <div>
@@ -203,18 +262,18 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
                 </h4>
                 <ul className="space-y-3">
                   <li className="submenu-item">
-                    <a href="/stiftungsrat" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
-                      Stiftungsrat
-                    </a>
-                  </li>
-                  <li className="submenu-item">
-                    <a href="/vorstand" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
-                      Vorstand
-                    </a>
-                  </li>
-                  <li className="submenu-item">
                     <a href="/team" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
                       Team
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/friends" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Freunde
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/partner" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Partner
                     </a>
                   </li>
                   <li className="submenu-item">
@@ -223,6 +282,125 @@ export default function MainMenu({ isOpen, onClose }: MainMenuProps) {
                     </a>
                   </li>
                 </ul>
+              </div>
+            )}
+
+            {hoveredItem === 'loesungen' && (
+              <div>
+                <h4 className="text-[20px] font-semibold text-[#D1B06B] mb-6 uppercase tracking-wider">
+                  Unsere Lösungen
+                </h4>
+                <ul className="space-y-3">
+                  <li className="submenu-item">
+                    <a href="/scanner-app" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Scanner-App
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/haendler-dashboard" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Händler-Dashboard
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/retourenmanagement" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Retourenmanagement
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/multi-carrier-versand" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Multi-Carrier-Versand
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/personal-tracking" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Personal-Tracking
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+            {hoveredItem === 'ai-funktionen' && (
+              <div>
+                <h4 className="text-[20px] font-semibold text-[#D1B06B] mb-6 uppercase tracking-wider">
+                  KI-gestützte Features
+                </h4>
+                <ul className="space-y-3">
+                  <li className="submenu-item">
+                    <a href="/ai-adressguardian" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      AI-Adressguardian
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/ai-fullfiller" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      AI-Fullfiller
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/ai-report" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      AI-Report
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/cloudbot" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      Cloudbot
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/ai-empty-bin" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      AI-Empty-Bin
+                    </a>
+                  </li>
+                  <li className="submenu-item">
+                    <a href="/dronefly" className="text-[17px] text-[#01182D]/80 hover:text-[#01182D] transition-colors block">
+                      DroneFly (BETA)
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+            {hoveredItem === 'kontakt' && (
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-[20px] font-semibold text-[#D1B06B] mb-4 uppercase tracking-wider">
+                    Kontakt
+                  </h4>
+                  <div className="w-full h-[200px] bg-[#01182D]/5 rounded-lg overflow-hidden border border-[#01182D]/10">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.1699707991717!2d13.2724663!3d52.4114348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a85be1300ea131%3A0x4e93fe2bdfc86048!2swooms%20WMS%20GmbH!5e0!3m2!1sde!2sde!4v1234567890!5m2!1sde!2sde"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
+                  <div className="flex items-center gap-4 mt-4 flex-wrap">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src="/media/logos/Digital_Glyph_Dark_Green.png"
+                        alt="WhatsApp"
+                        className="h-[32px] w-auto"
+                      />
+                      <a
+                        href="tel:+4917472118113"
+                        className="text-[17px] text-[#01182D] hover:text-[#D1B06B] transition-colors font-medium"
+                      >
+                        0174 721 18 13
+                      </a>
+                    </div>
+                    <a
+                      href="https://calendly.com/start-wooms/30min"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block px-6 py-2 bg-[#01182d] text-white rounded-full text-[14px] font-medium hover:bg-[#D1B06B] transition-colors"
+                    >
+                      Termin buchen
+                    </a>
+                  </div>
+                </div>
               </div>
             )}
 

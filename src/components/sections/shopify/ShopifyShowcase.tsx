@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -52,12 +52,15 @@ export default function ShopifyShowcase() {
   const [showButton, setShowButton] = useState(false);
   const [showCursor, setShowCursor] = useState(false);
   const [cursorProgress, setCursorProgress] = useState(0);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
   const [buttonClicked, setButtonClicked] = useState(false);
   const [showScreenshot, setShowScreenshot] = useState(false);
   const searchPillRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const screenshotRef = useRef<HTMLDivElement>(null);
   const hasTyped = useRef(false);
+  const cursorAnimated = useRef(false);
 
   // Typing Animation - Scroll-based with PIN
   useGSAP(() => {
@@ -68,46 +71,67 @@ export default function ShopifyShowcase() {
     ScrollTrigger.create({
       trigger: container.current,
       start: 'top top',
-      end: '+=2000', // 2000px scroll distance for typing
-      pin: true, // PIN the section while scrolling
+      end: '+=1500',
+      pin: true,
       scrub: 1,
-      markers: false,
       onUpdate: (self) => {
         const charCount = Math.round(self.progress * fullText.length);
         const text = fullText.substring(0, charCount);
         setSearchText(text);
 
-        // Show cursor when typing is complete
         if (self.progress >= 1 && !showCursor) {
           setShowCursor(true);
         }
       }
     });
-  }, { scope: container });
+  }, { scope: container, dependencies: [] });
 
-  // Cursor Animation - starts after typing is complete
-  useGSAP(() => {
-    if (!showCursor) return;
+  // When cursor should show, calculate button position and animate
+  useEffect(() => {
+    if (!showCursor || !searchPillRef.current || cursorAnimated.current) return;
 
-    // Animate cursor progress from 0 to 1 over 1.5 seconds
-    gsap.to({ progress: 0 }, {
+    const button = searchPillRef.current.querySelector('.install-button');
+    if (!button) return;
+
+    // Mark as animated to prevent re-triggering
+    cursorAnimated.current = true;
+
+    const buttonRect = button.getBoundingClientRect();
+    const endX = buttonRect.left + buttonRect.width / 2;
+    const endY = buttonRect.top + buttonRect.height / 2;
+
+    setButtonPosition({ x: endX, y: endY });
+
+    const startX = window.innerWidth * 0.3;
+    const startY = window.innerHeight * 0.5;
+    const midX = (startX + endX) / 2;
+    const midY = (startY + endY) / 2 - 100;
+
+    // Animate cursor with GSAP
+    const tween = gsap.to({ progress: 0 }, {
       progress: 1,
       duration: 1.5,
       ease: 'power2.inOut',
+      delay: 0.5,
       onUpdate: function() {
-        setCursorProgress(this.targets()[0].progress);
+        const t = this.targets()[0].progress;
+        const currentX = Math.pow(1 - t, 2) * startX + 2 * (1 - t) * t * midX + Math.pow(t, 2) * endX;
+        const currentY = Math.pow(1 - t, 2) * startY + 2 * (1 - t) * t * midY + Math.pow(t, 2) * endY;
+        setCursorPosition({ x: currentX, y: currentY });
+        setCursorProgress(t);
       },
       onComplete: () => {
-        // Trigger button click when cursor reaches the button
         setButtonClicked(true);
-
-        // Show screenshot after a short delay
         setTimeout(() => {
           setShowScreenshot(true);
         }, 300);
       }
     });
-  }, { dependencies: [showCursor] });
+
+    return () => {
+      tween.kill();
+    };
+  }, [showCursor]);
 
   // Screenshot Animation - fades in after button click
   useGSAP(() => {
@@ -273,61 +297,38 @@ export default function ShopifyShowcase() {
                 </div>
 
                 {/* Animated Cursor */}
-                {showCursor && index === 0 && (() => {
-                  const button = searchPillRef.current?.querySelector('.install-button');
-                  if (!button) return null;
+                {showCursor && buttonPosition.x > 0 && (
+                  <>
+                    <div
+                      ref={cursorRef}
+                      className="fixed z-50 pointer-events-none"
+                      style={{
+                        left: `${cursorPosition.x || window.innerWidth * 0.3}px`,
+                        top: `${cursorPosition.y || window.innerHeight * 0.5}px`,
+                        transform: 'translate(-50%, -50%)'
+                      }}
+                    >
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="#01182D" stroke="white" strokeWidth="1.5">
+                        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+                      </svg>
+                    </div>
 
-                  const buttonRect = button.getBoundingClientRect();
-                  // Start position: left side of screen, vertically centered
-                  const startX = window.innerWidth * 0.3;
-                  const startY = window.innerHeight * 0.5;
-                  // End position: center of Install button
-                  const endX = buttonRect.left + buttonRect.width / 2;
-                  const endY = buttonRect.top + buttonRect.height / 2;
-
-                  // Create a curved path using a quadratic bezier curve
-                  // Control point is above the midpoint for an arc effect
-                  const midX = (startX + endX) / 2;
-                  const midY = (startY + endY) / 2 - 100; // 100px above midpoint for arc
-
-                  // Quadratic bezier formula: B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
-                  const t = cursorProgress;
-                  const currentX = Math.pow(1 - t, 2) * startX + 2 * (1 - t) * t * midX + Math.pow(t, 2) * endX;
-                  const currentY = Math.pow(1 - t, 2) * startY + 2 * (1 - t) * t * midY + Math.pow(t, 2) * endY;
-
-                  return (
-                    <>
+                    {/* Click ripple effect */}
+                    {buttonClicked && (
                       <div
-                        ref={cursorRef}
                         className="fixed z-50 pointer-events-none"
                         style={{
-                          left: `${currentX}px`,
-                          top: `${currentY}px`,
+                          left: `${buttonPosition.x}px`,
+                          top: `${buttonPosition.y}px`,
                           transform: 'translate(-50%, -50%)'
                         }}
                       >
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="#01182D" stroke="white" strokeWidth="1.5">
-                          <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
-                        </svg>
+                        <div className="absolute w-8 h-8 bg-[#D1B06B]/30 rounded-full animate-ping"></div>
+                        <div className="absolute w-8 h-8 bg-[#D1B06B]/20 rounded-full animate-ping" style={{ animationDelay: '0.1s' }}></div>
                       </div>
-
-                      {/* Click ripple effect when button is clicked */}
-                      {buttonClicked && (
-                        <div
-                          className="fixed z-50 pointer-events-none"
-                          style={{
-                            left: `${endX}px`,
-                            top: `${endY}px`,
-                            transform: 'translate(-50%, -50%)'
-                          }}
-                        >
-                          <div className="absolute w-8 h-8 bg-[#D1B06B]/30 rounded-full animate-ping"></div>
-                          <div className="absolute w-8 h-8 bg-[#D1B06B]/20 rounded-full animate-ping" style={{ animationDelay: '0.1s' }}></div>
-                        </div>
-                      )}
-                    </>
-                  );
-                })()}
+                    )}
+                  </>
+                )}
 
                 {/* Screenshot - appears after button click */}
                 {showScreenshot && (
@@ -346,62 +347,6 @@ export default function ShopifyShowcase() {
               </>
             )}
 
-            {/* Animated Cursor */}
-            {showCursor && index === 0 && (() => {
-              const button = searchPillRef.current?.querySelector('.install-button');
-              if (!button) return null;
-
-              const buttonRect = button.getBoundingClientRect();
-              // Start position: left side of screen, vertically centered
-              const startX = window.innerWidth * 0.3;
-              const startY = window.innerHeight * 0.5;
-              // End position: center of Install button
-              const endX = buttonRect.left + buttonRect.width / 2;
-              const endY = buttonRect.top + buttonRect.height / 2;
-
-              // Create a curved path using a quadratic bezier curve
-              // Control point is above the midpoint for an arc effect
-              const midX = (startX + endX) / 2;
-              const midY = (startY + endY) / 2 - 100; // 100px above midpoint for arc
-
-              // Quadratic bezier formula: B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
-              const t = cursorProgress;
-              const currentX = Math.pow(1 - t, 2) * startX + 2 * (1 - t) * t * midX + Math.pow(t, 2) * endX;
-              const currentY = Math.pow(1 - t, 2) * startY + 2 * (1 - t) * t * midY + Math.pow(t, 2) * endY;
-
-              return (
-                <>
-                  <div
-                    ref={cursorRef}
-                    className="fixed z-50 pointer-events-none"
-                    style={{
-                      left: `${currentX}px`,
-                      top: `${currentY}px`,
-                      transform: 'translate(-50%, -50%)'
-                    }}
-                  >
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="#01182D" stroke="white" strokeWidth="1.5">
-                      <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
-                    </svg>
-                  </div>
-
-                  {/* Click ripple effect when button is clicked */}
-                  {buttonClicked && (
-                    <div
-                      className="fixed z-50 pointer-events-none"
-                      style={{
-                        left: `${endX}px`,
-                        top: `${endY}px`,
-                        transform: 'translate(-50%, -50%)'
-                      }}
-                    >
-                      <div className="absolute w-8 h-8 bg-[#D1B06B]/30 rounded-full animate-ping"></div>
-                      <div className="absolute w-8 h-8 bg-[#D1B06B]/20 rounded-full animate-ping" style={{ animationDelay: '0.1s' }}></div>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
 
             {/* Content Overlay */}
             <div className="relative z-10 h-full flex items-center justify-center px-8 md:px-16 lg:px-24">

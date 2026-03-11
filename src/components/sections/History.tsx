@@ -25,6 +25,7 @@ export default function History() {
   const container = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useGSAP(() => {
     const sections = gsap.utils.toArray('.history-card');
@@ -41,6 +42,11 @@ export default function History() {
           scrub: 1,
           snap: 1 / (sections.length - 1),
           end: () => `+=${scrollWidth}`,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const newIndex = Math.round(progress * (sections.length - 1));
+            setCurrentSlide(newIndex);
+          }
         }
       });
     }
@@ -50,7 +56,7 @@ export default function History() {
     <section ref={container} className="relative bg-[#01182D] overflow-hidden" style={{ height: '100vh' }}>
 
       {/* Header */}
-      <div className="absolute top-8 md:top-16 left-8 md:left-16 z-20 text-white">
+      <div className="absolute top-[152px] md:top-[184px] left-8 md:left-16 z-20 text-white">
         <p className="text-[14px] md:text-[16px] font-light tracking-wider mb-2 text-white/60 uppercase">
           Ein Blick zurück
         </p>
@@ -61,7 +67,7 @@ export default function History() {
       </div>
 
       {/* Horizontal Scroll Container */}
-      <div ref={horizontalRef} className="flex h-full items-center">
+      <div ref={horizontalRef} className="flex h-full items-center pt-[200px]">
         {timelineData.map((item, index) => (
           <div
             key={index}
@@ -72,20 +78,18 @@ export default function History() {
             <div className="max-w-[900px] w-full">
 
               {/* Year Badge */}
-              <div className={`inline-block px-6 py-2 rounded-full border-2 mb-8 ${
-                item.isHighlight
+              <div className={`inline-block px-6 py-2 rounded-full border-2 mb-8 ${item.isHighlight
                   ? 'border-[#D1B06B] bg-[#D1B06B]/10'
                   : 'border-white/30 bg-white/5'
-              }`}>
-                <span className={`text-[18px] md:text-[22px] font-bold tracking-wider ${
-                  item.isHighlight ? 'text-[#D1B06B]' : 'text-white'
                 }`}>
+                <span className={`text-[18px] md:text-[22px] font-bold tracking-wider ${item.isHighlight ? 'text-[#D1B06B]' : 'text-white'
+                  }`}>
                   {item.year}
                 </span>
               </div>
 
               {/* Content Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
                 {/* Video or Icon */}
                 <div className="relative">
@@ -132,10 +136,9 @@ export default function History() {
                 </div>
 
                 {/* Text Content */}
-                <div className="text-white">
-                  <h3 className={`text-[32px] md:text-[42px] lg:text-[52px] font-bold leading-[1.1] mb-6 ${
-                    item.isHighlight ? 'text-[#D1B06B]' : 'text-white'
-                  }`}>
+                <div className="text-white max-w-[500px]">
+                  <h3 className={`text-[32px] md:text-[42px] lg:text-[52px] font-bold leading-[1.2] mb-6 ${item.isHighlight ? 'text-[#D1B06B]' : 'text-white'
+                    }`}>
                     {item.title}
                   </h3>
                   <p className="text-[18px] md:text-[22px] leading-[1.6] text-white/80 font-light">
@@ -155,9 +158,8 @@ export default function History() {
         {timelineData.map((_, index) => (
           <div
             key={index}
-            className={`w-2 h-2 rounded-full transition-all ${
-              index === 0 ? 'bg-[#D1B06B] w-8' : 'bg-white/30'
-            }`}
+            className={`w-2 h-2 rounded-full transition-all ${index === currentSlide ? 'bg-[#D1B06B] w-8' : 'bg-white/30'
+              }`}
           />
         ))}
       </div>

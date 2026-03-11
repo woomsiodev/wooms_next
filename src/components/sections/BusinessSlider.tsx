@@ -32,7 +32,7 @@ const businessAreas = [
   {
     id: 4,
     title: 'AI',
-    image: '/assets/slider/shopify_AI_WMS_Scanner.png',
+    image: '/media/images/ai_process_wms.png',
     label: 'AI'
   },
   {
