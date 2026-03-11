@@ -3,6 +3,9 @@ import ShopifyHero from '@/components/sections/shopify/ShopifyHero';
 import ShopifyAbout from '@/components/sections/shopify/ShopifyAbout';
 import ShopifyStats from '@/components/sections/shopify/ShopifyStats';
 import ShopifyShowcase from '@/components/sections/shopify/ShopifyShowcase';
+import WoomsAcronym from '@/components/sections/shopify/WoomsAcronym';
+import ShopifyCTA from '@/components/sections/shopify/ShopifyCTA';
+import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Shopify WMS - Lagersoftware für Shopify | wooms',
@@ -17,6 +20,9 @@ export default function ShopifyPage() {
       <ShopifyAbout />
       <ShopifyStats />
       <ShopifyShowcase />
+      <WoomsAcronym />
+      <ShopifyCTA />
+      <Footer />
     </main>
   );
 }

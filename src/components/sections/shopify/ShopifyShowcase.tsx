@@ -49,7 +49,7 @@ export default function ShopifyShowcase() {
   const horizontalRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchText, setSearchText] = useState('');
-  const [showButton, setShowButton] = useState(false);
+  const [showButton] = useState(false);
   const [showCursor, setShowCursor] = useState(false);
   const [cursorProgress, setCursorProgress] = useState(0);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -59,8 +59,11 @@ export default function ShopifyShowcase() {
   const searchPillRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const screenshotRef = useRef<HTMLDivElement>(null);
-  const hasTyped = useRef(false);
   const cursorAnimated = useRef(false);
+  // Refs to track current state inside onUpdate (avoids stale closures)
+  const showCursorRef = useRef(false);
+
+  const fadeOverlayRef = useRef<HTMLDivElement>(null);
 
   // Typing Animation - Scroll-based with PIN
   useGSAP(() => {
@@ -71,16 +74,40 @@ export default function ShopifyShowcase() {
     ScrollTrigger.create({
       trigger: container.current,
       start: 'top top',
-      end: '+=1500',
+      end: '+=2500',
       pin: true,
       scrub: 1,
       onUpdate: (self) => {
-        const charCount = Math.round(self.progress * fullText.length);
-        const text = fullText.substring(0, charCount);
-        setSearchText(text);
+        // Typing: 0–55% of scroll
+        const typingProgress = Math.min(self.progress / 0.55, 1);
+        const charCount = Math.round(typingProgress * fullText.length);
+        setSearchText(fullText.substring(0, charCount));
 
-        if (self.progress >= 1 && !showCursor) {
-          setShowCursor(true);
+        if (typingProgress >= 1) {
+          // Forward: trigger cursor animation
+          if (!showCursorRef.current) {
+            showCursorRef.current = true;
+            setShowCursor(true);
+          }
+        } else {
+          // Reverse scroll: reset all cursor/screenshot state
+          if (showCursorRef.current) {
+            showCursorRef.current = false;
+            cursorAnimated.current = false;
+            setShowCursor(false);
+            setButtonClicked(false);
+            setShowScreenshot(false);
+            setCursorPosition({ x: 0, y: 0 });
+            setButtonPosition({ x: 0, y: 0 });
+          }
+        }
+
+        // Fade to white: 85–100% of scroll
+        if (fadeOverlayRef.current) {
+          const fadeProgress = self.progress > 0.85
+            ? (self.progress - 0.85) / 0.15
+            : 0;
+          fadeOverlayRef.current.style.opacity = String(fadeProgress);
         }
       }
     });
@@ -207,6 +234,12 @@ export default function ShopifyShowcase() {
 
   return (
     <section ref={container} className="relative bg-[#F5F2ED] overflow-hidden h-screen">
+      {/* Fade-to-white overlay */}
+      <div
+        ref={fadeOverlayRef}
+        className="absolute inset-0 z-[100] bg-white pointer-events-none"
+        style={{ opacity: 0 }}
+      />
 
       {/* Progress Indicator */}
       <div className="fixed top-1/2 right-8 -translate-y-1/2 z-50 flex flex-col gap-3">
@@ -301,7 +334,7 @@ export default function ShopifyShowcase() {
                   <>
                     <div
                       ref={cursorRef}
-                      className="fixed z-50 pointer-events-none"
+                      className="fixed z-[200] pointer-events-none"
                       style={{
                         left: `${cursorPosition.x || window.innerWidth * 0.3}px`,
                         top: `${cursorPosition.y || window.innerHeight * 0.5}px`,
@@ -316,7 +349,7 @@ export default function ShopifyShowcase() {
                     {/* Click ripple effect */}
                     {buttonClicked && (
                       <div
-                        className="fixed z-50 pointer-events-none"
+                        className="fixed z-[200] pointer-events-none"
                         style={{
                           left: `${buttonPosition.x}px`,
                           top: `${buttonPosition.y}px`,
@@ -334,7 +367,7 @@ export default function ShopifyShowcase() {
                 {showScreenshot && (
                   <div
                     ref={screenshotRef}
-                    className="absolute inset-0 z-30 flex items-center justify-center p-16 pointer-events-none"
+                    className="absolute inset-0 z-[150] flex items-center justify-center p-16 pointer-events-none"
                     style={{ paddingTop: 'calc(4rem + 95px)' }}
                   >
                     <img
