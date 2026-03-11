@@ -1,0 +1,9 @@
+services:
+  wooms:
+    build: .
+    container_name: wooms_next
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
