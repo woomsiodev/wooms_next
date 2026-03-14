@@ -20,9 +20,9 @@ export default function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Scroll-Listener für Shopify-Seite, Team-Seite und Preise-Seite
+  // Scroll-Listener für Shopify-Seite, Team-Seite, Preise-Seite und DroneFly-Seite
   useEffect(() => {
-    if (pathname !== '/shopify' && pathname !== '/team' && pathname !== '/preise') return;
+    if (pathname !== '/shopify' && pathname !== '/team' && pathname !== '/preise' && pathname !== '/dronefly') return;
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -33,9 +33,17 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
+  // Liste der Seiten mit transparentem Header
+  const transparentPages = ['/shopify', '/team', '/preise', '/dronefly', '/presse'];
+  const isTransparentPage = transparentPages.includes(pathname);
+
+  // Liste der Seiten ohne Pill (nur Inhalt sichtbar)
+  const noPillPages = ['/scanner-app', '/multi-carrier-versand'];
+  const isNoPillPage = noPillPages.includes(pathname);
+
   // Bestimme Header-Hintergrund basierend auf der aktuellen Seite und Scroll-Position
   const getHeaderBackground = () => {
-    if (pathname === '/shopify' || pathname === '/team' || pathname === '/preise') {
+    if (isTransparentPage) {
       return scrolled ? 'bg-white/70' : 'bg-transparent';
     }
     return 'bg-white/70';
@@ -43,7 +51,7 @@ export default function Header() {
 
   // Bestimme ob Shadow und Border angezeigt werden sollen
   const getHeaderStyles = () => {
-    if (pathname === '/shopify' || pathname === '/team' || pathname === '/preise') {
+    if (isTransparentPage) {
       return scrolled
         ? 'shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-white/20'
         : 'shadow-none border-transparent';
@@ -53,7 +61,7 @@ export default function Header() {
 
   // Bestimme Textfarbe basierend auf der aktuellen Seite und Scroll-Position
   const getTextColor = () => {
-    if (pathname === '/shopify' || pathname === '/team' || pathname === '/preise') {
+    if (isTransparentPage) {
       return scrolled ? 'text-[#01182D]' : 'text-white';
     }
     return 'text-[#01182D]';
@@ -61,7 +69,7 @@ export default function Header() {
 
   // Bestimme Icon-Farbe basierend auf der aktuellen Seite und Scroll-Position
   const getIconColor = () => {
-    if (pathname === '/shopify' || pathname === '/team' || pathname === '/preise') {
+    if (isTransparentPage) {
       return scrolled ? '#01182D' : '#FFFFFF';
     }
     return '#01182D';
@@ -69,7 +77,7 @@ export default function Header() {
 
   // Bestimme Border-Farbe für Menü-Button
   const getMenuBorderColor = () => {
-    if (pathname === '/shopify' || pathname === '/team' || pathname === '/preise') {
+    if (isTransparentPage) {
       return scrolled ? 'border-[#01182D]' : 'border-white';
     }
     return 'border-[#01182D]';
@@ -94,7 +102,7 @@ export default function Header() {
   return (
     <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
       {/* Die Glas-Pille */}
-      <header className={`${getHeaderBackground()} ${getHeaderStyles()} ${(pathname === '/shopify' || pathname === '/team' || pathname === '/preise') && !scrolled ? '' : 'backdrop-blur-xl'} rounded-full border px-12 py-5 flex items-center justify-between w-full max-w-[1500px] transition-all duration-500 ease-in-out`}>
+      <header className={`${isNoPillPage ? '' : `${getHeaderBackground()} ${getHeaderStyles()} ${isTransparentPage && !scrolled ? '' : 'backdrop-blur-xl'} rounded-full border`} px-12 py-5 flex items-center justify-between w-full max-w-[1500px] transition-all duration-500 ease-in-out`}>
         
         {/* Logo - linke Sektion, Position beibehalten durch pl-10 */}
         <div className="flex-1 pl-10">
@@ -104,7 +112,7 @@ export default function Header() {
               alt="wooms WMS GmbH Logo"
               width={180}
               height={40}
-              className={`h-auto transition-all duration-500 ${(pathname === '/shopify' || pathname === '/team' || pathname === '/preise') && !scrolled ? 'brightness-0 invert' : ''}`}
+              className={`h-auto transition-all duration-500 ${isTransparentPage && !scrolled ? 'brightness-0 invert' : ''}`}
               priority
             />
           </Link>
@@ -161,7 +169,7 @@ export default function Header() {
             onClick={() => setIsMenuOpen(true)}
             className="flex items-center gap-6 group"
           >
-            <div className={`w-[84px] h-[84px] rounded-full border ${getMenuBorderColor()} ${getTextColor()} flex flex-col items-center justify-center gap-[6px] ${(pathname === '/shopify' || pathname === '/team' || pathname === '/preise') && !scrolled ? 'group-hover:bg-white group-hover:text-[#01182D]' : 'group-hover:bg-[#01182D] group-hover:text-white'} transition-all duration-500`}>
+            <div className={`w-[84px] h-[84px] rounded-full border ${getMenuBorderColor()} ${getTextColor()} flex flex-col items-center justify-center gap-[6px] ${isTransparentPage && !scrolled ? 'group-hover:bg-white group-hover:text-[#01182D]' : 'group-hover:bg-[#01182D] group-hover:text-white'} transition-all duration-500`}>
               <div className="w-10 h-[2.5px] bg-current rounded-full"></div>
               <div className="w-10 h-[2.5px] bg-current rounded-full"></div>
               <div className="w-10 h-[2.5px] bg-current rounded-full"></div>
